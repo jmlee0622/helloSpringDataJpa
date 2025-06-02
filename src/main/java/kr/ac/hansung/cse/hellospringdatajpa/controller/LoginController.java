@@ -46,6 +46,7 @@ public class LoginController {
             if (passwordEncoder.matches(password, encodedPassword)) {
                 System.out.println("비밀번호 일치 - 로그인 성공");
                 session.setAttribute("user", optionalUser.get());
+                System.out.println("사용자 권한(role): " + optionalUser.get().getRole());  // role 출력
                 return "redirect:/products";
             } else {
                 System.out.println("비밀번호 불일치 - 로그인 실패");

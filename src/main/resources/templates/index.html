@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org">
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head th:insert="~{common :: commonHead}">
   <title>Product Manager</title>
@@ -18,7 +19,9 @@
     </div>
   </div>
 
-  <a class="btn btn-primary mb-3" th:href="@{/products/new}">Create New Product</a>
+  <div sec:authorize="hasRole('ADMIN')">
+    <a href="/products/new" class="btn btn-success">상품 등록</a>
+  </div>
 
   <table class="table table-bordered">
     <thead>
@@ -39,8 +42,10 @@
       <td th:text="${product.madeIn}">Made in</td>
       <td th:text="${product.price}">Price</td>
       <td>
-        <a class="btn btn-primary btn-sm" th:href="@{'/products/edit/' + ${product.id}}">Edit</a>
-        <a class="btn btn-danger btn-sm" th:href="@{'/products/delete/' + ${product.id}}">Delete</a>
+        <div  sec:authorize="hasRole('ADMIN')">
+          <a th:href="@{'/products/edit/' + ${product.id}}" class="btn btn-primary btn-sm">Edit</a>
+          <a th:href="@{'/products/delete/' + ${product.id}}" class="btn btn-danger btn-sm">Delete</a>
+        </div>
       </td>
     </tr>
     </tbody>
