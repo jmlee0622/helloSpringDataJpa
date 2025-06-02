@@ -8,7 +8,13 @@
 
 <body>
 <div class="container">
-  <h1 class="mt-5">Product List</h1>
+
+  <div class="d-flex justify-content-between align-items-center mt-4 mb-3">
+    <h1>Product List</h1>
+
+    <a class="btn btn-outline-success" th:href="@{/sign}">회원가입</a>
+  </div>
+
   <a class="btn btn-primary mb-3" th:href="@{/products/new}">Create New Product</a>
 
   <table class="table table-bordered">
@@ -38,7 +44,6 @@
   </table>
 </div>
 
-<!-- Bootstrap JS fragment 삽입 -->
 <div th:insert="~{common :: commonScript}"></div>
 </body>
 </html>
