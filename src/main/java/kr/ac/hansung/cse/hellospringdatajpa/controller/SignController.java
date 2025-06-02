@@ -28,6 +28,6 @@ public class SignController {
     @PostMapping("/sign")
     public String handleSignUp(@ModelAttribute User user, Model model) {
         userRepository.save(user);
-        return "redirect:/products"; // 홈 또는 로그인 페이지로 리디렉션
+        return "redirect:/login"; // 홈 또는 로그인 페이지로 리디렉션
     }
 }

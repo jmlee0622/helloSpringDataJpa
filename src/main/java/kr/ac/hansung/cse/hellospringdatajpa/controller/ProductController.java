@@ -1,6 +1,8 @@
 package kr.ac.hansung.cse.hellospringdatajpa.controller;
 
+import jakarta.servlet.http.HttpSession;
 import kr.ac.hansung.cse.hellospringdatajpa.entity.Product;
+import kr.ac.hansung.cse.hellospringdatajpa.entity.User;
 import kr.ac.hansung.cse.hellospringdatajpa.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,10 +19,14 @@ public class ProductController {
     private ProductService service;
 
     @GetMapping({"", "/"}) // products 또는 /products/ 둘 다 매핑
-    public String viewHomePage(Model model) {
-
+    public String viewHomePage(Model model, HttpSession session) {
         List<Product> listProducts = service.listAll();
         model.addAttribute("listProducts", listProducts);
+
+        User loggedInUser = (User) session.getAttribute("user");
+        if (loggedInUser != null) {
+            model.addAttribute("username", loggedInUser.getName());
+        }
 
         return "index";
     }
