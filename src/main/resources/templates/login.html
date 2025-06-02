@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>로그인</title>
@@ -9,7 +10,7 @@
 <div class="container mt-5">
     <h2 class="mb-4">로그인</h2>
 
-    <form th:action="@{/login}" method="post">
+    <form th:action="@{/logincheck}" method="post">
         <div class="mb-3">
             <label for="email" class="form-label">이메일</label>
             <input type="email" class="form-control" id="email" name="email" placeholder="이메일 입력" required>

@@ -21,6 +21,7 @@ public class ProductController {
     @GetMapping({"", "/"}) // products 또는 /products/ 둘 다 매핑
     public String viewHomePage(Model model, HttpSession session) {
         List<Product> listProducts = service.listAll();
+        System.out.println("✅ /products 페이지 진입"); // 로그 찍기
         model.addAttribute("listProducts", listProducts);
 
         User loggedInUser = (User) session.getAttribute("user");

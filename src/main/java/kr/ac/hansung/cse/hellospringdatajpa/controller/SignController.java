@@ -3,6 +3,7 @@ package kr.ac.hansung.cse.hellospringdatajpa.controller;
 
 import kr.ac.hansung.cse.hellospringdatajpa.repo.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -13,10 +14,12 @@ import org.springframework.ui.Model;
 @Controller
 public class SignController {
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    public SignController(UserRepository userRepository) {
+    public SignController(UserRepository userRepository,PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
+        this.passwordEncoder=passwordEncoder;
     }
 
     @GetMapping("/sign")
@@ -27,7 +30,10 @@ public class SignController {
 
     @PostMapping("/sign")
     public String handleSignUp(@ModelAttribute User user, Model model) {
+        String rawPassword = user.getPassword();
+        String encodedPassword = passwordEncoder.encode(rawPassword);
+        user.setPassword(encodedPassword);
         userRepository.save(user);
-        return "redirect:/login"; // 홈 또는 로그인 페이지로 리디렉션
+        return "redirect:/login";
     }
 }
