@@ -37,7 +37,9 @@
         <div class="mb-3">
           <label for="price" class="form-label">Price:</label>
           <input type="text" id="price" class="form-control" th:field="*{price}" />
+          <div class="form-text text-danger" th:if="${#fields.hasErrors('price')}" th:errors="*{price}"></div>
         </div>
+
 
         <div class="text-center">
           <button type="submit" class="btn btn-primary">Save</button>

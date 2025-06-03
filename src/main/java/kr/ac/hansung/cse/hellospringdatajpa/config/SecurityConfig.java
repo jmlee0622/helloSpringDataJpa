@@ -29,15 +29,16 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/sign", "/login", "/logincheck", "/products","/css/**", "/js/**").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/products").hasAnyRole("USER", "ADMIN")
-                        .requestMatchers(HttpMethod.POST, "/products/**").hasRole("ADMIN")
-                        .requestMatchers(HttpMethod.PUT, "/products/**").hasRole("ADMIN")
-                        .requestMatchers(HttpMethod.DELETE, "/products/**").hasRole("ADMIN")
+                        .requestMatchers("/sign", "/login","/users","/logincheck","/products/edit/**","/products/delete/**","/products/save","/products","/products/new","/css/**", "/js/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/products/").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/products/").permitAll()
+                        .requestMatchers(HttpMethod.PUT, "/products/**").permitAll()
+                        .requestMatchers(HttpMethod.DELETE, "/products/**").permitAll()
                         .anyRequest().authenticated()
                 )
                 .formLogin(form -> form
                         .loginPage("/login")
+                        .failureUrl("/login?error") // 로그인 실패 시 error 파라미터 붙이기
                         .defaultSuccessUrl("/products", true)
                         .permitAll()
                 )

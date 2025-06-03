@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.ui.Model;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.Optional;
 
@@ -27,13 +28,14 @@ public class LoginController {
 
     @GetMapping("/login")
     public String showLoginForm() {
-        System.out.println("안뇽");
         return "login";
     }
     @PostMapping("/logincheck")
     public String handleLogin(@RequestParam String email,
                               @RequestParam String password,
-                              HttpSession session, Model model) {
+                              HttpSession session,
+                              RedirectAttributes redirectAttributes,
+                              Model model) {
 
         System.out.println("로그인 시도 - 이메일: " + email);
 
@@ -46,6 +48,7 @@ public class LoginController {
             if (passwordEncoder.matches(password, encodedPassword)) {
                 System.out.println("비밀번호 일치 - 로그인 성공");
                 session.setAttribute("user", optionalUser.get());
+                redirectAttributes.addFlashAttribute("success", "로그인 성공했습니다!");
                 System.out.println("사용자 권한(role): " + optionalUser.get().getRole());  // role 출력
                 return "redirect:/products";
             } else {
